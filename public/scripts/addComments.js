@@ -1,7 +1,7 @@
 const commentInput = document.querySelector('#commentInput');
 const commentSubmit = document.querySelector('#commentSubmit');
 // console.log(commentInput.value);
-console.log(postId);
+// console.log(postId);
 
 commentSubmit.addEventListener('click', () => {
     console.log('button clicked');

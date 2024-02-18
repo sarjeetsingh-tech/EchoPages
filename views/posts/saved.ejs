@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Your saved Posts</h1>
+    <% for( let post of saved ) { %>
+        <h3>
+            <a href="/posts/<%=post._id %>"><%=post.title %></a>
+            <h5><%=post.content%></h5>
+        </h3>
+        <hr>
+        <% } %>
+</body>
+
+</html>

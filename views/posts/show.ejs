@@ -18,15 +18,18 @@
         <%=post.content %>
     </h3>
 
-    <h5>Author---<%=post.author %></h5>
+    <h5>Author---<%=post.author %>
+    </h5>
 
     <h3 id="displayLike">
         <%= post.likes.length %>
     </h3> <button id="likeButton">Like</button>
 
-    <h3 id="saveButton">
-        
-    </h3><button id="saveButton">save</button>
+    <button id="saveButton">
+        <%= saveButtonText %>
+    </button>
+
+    <button id="followButton">follow</button>
 
     <h1>comments</h1>
     <input type="text" id="commentInput">
@@ -44,10 +47,12 @@
 </body>
 <script>
     const postId = '<%=post._id%>';
-    const url = `/posts/${postId}/like`;
-    document.querySelector('#likeButton').addEventListener('click', () => {
-      console.log('button clicked')
-        fetch(url, {
+    const owner = '<%=post.owner%>'
+    // console.log(owner)
+    const followButton = document.querySelector('#followButton')
+    followButton.addEventListener('click', () => {
+        console.log('clicked');
+        fetch(`/user/${owner}/follow`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -58,16 +63,27 @@
                 throw new Error('Network response was not ok');
             }
             return response.json();
-        }).then(data => {
-            document.querySelector('#displayLike').innerText=data;
-        }).catch(error => {
-            console.error('There was a problem with the fetch operation:', error);
-        });
-
+        })
+            .then(data => {
+                console.log('Fetch successful:', data);
+                console.log(data);
+                if (data === 'followed') {
+                    followButton.innerHTML = 'unfollow';
+                } else if (data === 'unfollowed') {
+                    followButton.innerHTML = 'follow';
+                }
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
     })
+
+
 
 </script>
 <script src="/scripts/addComments.js"></script>
 <script src="/scripts/deleteComments.js"></script>
+<script src="/scripts/likes.js"></script>
+<script src="/scripts/saved.js"></script>
 
 </html>
