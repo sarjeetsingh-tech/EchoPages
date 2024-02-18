@@ -1,0 +1,27 @@
+<!-- views/new-post.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New Post</title>
+</head>
+<body>
+    <h1>Create New Post</h1>
+    <form action="/posts" method="POST">
+        <label for="title">Title:</label><br>
+        <input type="text" id="title" name="post[title]"><br>
+    
+        <label for="content">Content:</label><br>
+        <textarea id="content" name="post[content]" rows="4" cols="50"></textarea><br>
+        
+        <label for="tags">Tags (comma-separated):</label><br>
+        <input type="text" id="tags" name="post[tags]"><br>
+        
+        <button type="submit">Submit</button>
+    </form>
+    <a href="/posts">cancel</a>
+    
+</body>
+</html>

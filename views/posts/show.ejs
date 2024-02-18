@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+
+<body>
+
+    <h1>
+        <%=post.title%>
+    </h1>
+
+    <h3>
+        <%=post.content %>
+    </h3>
+
+    <h5>Author---<%=post.author %></h5>
+
+    <h3 id="displayLike">
+        <%= post.likes.length %>
+    </h3> <button id="likeButton">Like</button>
+
+    <h3 id="saveButton">
+        
+    </h3><button id="saveButton">save</button>
+
+    <h1>comments</h1>
+    <input type="text" id="commentInput">
+    <button id="commentSubmit">Submit</button>
+    <ul id="commentsList">
+        <% for(let comment of comments) { %>
+            <li>
+                <%= comment.comment %>--by <%= comment.user.name %>
+                        <button class="deleteCommentButton" data-comment-id=<%=comment._id%>
+                            >Delete</button>
+
+            </li>
+            <% } %>
+    </ul>
+</body>
+<script>
+    const postId = '<%=post._id%>';
+    const url = `/posts/${postId}/like`;
+    document.querySelector('#likeButton').addEventListener('click', () => {
+      console.log('button clicked')
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({})
+        }).then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        }).then(data => {
+            document.querySelector('#displayLike').innerText=data;
+        }).catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+        });
+
+    })
+
+</script>
+<script src="/scripts/addComments.js"></script>
+<script src="/scripts/deleteComments.js"></script>
+
+</html>

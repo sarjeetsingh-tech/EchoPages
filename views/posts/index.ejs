@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <a href="/posts/new">create post</a>
+    <h1>All Blogs</h1>
+    <% for( let post of posts ) { %>
+        <div style="border: 1px solid black;">
+            <h2><a href="/posts/<%= post._id %>">
+                    <%= post.title %>
+                </a></h2>
+            <h3>
+                <%= post.content %>
+            </h3>
+            <span>Author - <%=post.author%></span>
+        </div>
+        <% } %>
+</body>
+
+</html>
