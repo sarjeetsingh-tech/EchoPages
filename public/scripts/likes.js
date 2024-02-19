@@ -1,8 +1,6 @@
-
-const url = `/posts/${postId}/like`;
 document.querySelector('#likeButton').addEventListener('click', () => {
     console.log('button clicked')
-    fetch(url, {
+    fetch(`/posts/${postId}/like`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

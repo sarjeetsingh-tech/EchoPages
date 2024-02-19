@@ -1,26 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-
-<body>
-    <a href="/posts/new">create post</a>
-    <h1>All Blogs</h1>
-    <% for( let post of posts ) { %>
-        <div style="border: 1px solid black;">
-            <h2><a href="/posts/<%= post._id %>">
-                    <%= post.title %>
-                </a></h2>
-            <h3>
-                <%= post.content %>
-            </h3>
-            <span>Author - <%=post.author%></span>
+<% layout('layouts/boilerplate') -%>
+<% for( let post of posts ) { %>
+<div class="dark:bg-gray-800 dark:text-gray-100">
+    <div class="container max-w-4xl px-10 py-6 mx-auto rounded-lg shadow-sm dark:bg-gray-900">
+        <div class="flex items-center justify-between">
+            <span class="text-sm dark:text-gray-400">
+                <%=post.publicationDate%>
+            </span>
+            <a rel="noopener noreferrer" href="#"
+                class="px-2 py-1 font-bold rounded dark:bg-violet-400 dark:text-gray-900">Javascript</a>
         </div>
-        <% } %>
-</body>
-
-</html>
+        <div class="mt-3">
+            <a rel="noopener noreferrer" href="#" class="text-2xl font-bold hover:underline">
+                <%= post.title %>
+            </a>
+            <div class="mt-2" style="max-height: 3em; overflow: hidden;">
+                <%= post.content %><span class="ellipsis">...</span>
+            </div>
+        </div>
+        <div class="flex items-center justify-between mt-4">
+            <a rel="noopener noreferrer" href="/posts/<%= post._id %>"
+                class="hover:underline dark:text-violet-400">Read more</a>
+            <div>
+                <a rel="noopener noreferrer" href="#" class="flex items-center">
+                    <img src="https://source.unsplash.com/50x50/?portrait" alt="avatar"
+                        class="object-cover w-10 h-10 mx-4 rounded-full dark:bg-gray-500">
+                    <span class="hover:underline dark:text-gray-400">
+                        <%= post.author %>
+                    </span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<% } %>

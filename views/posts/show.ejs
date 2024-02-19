@@ -1,15 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-
-</head>
-
-<body>
-
+<% layout('layouts/boilerplate') -%>
     <h1>
         <%=post.title%>
     </h1>
@@ -29,7 +18,9 @@
         <%= saveButtonText %>
     </button>
 
-    <button id="followButton">follow</button>
+    <button id="followButton">
+        <%= followButtonText %>
+    </button>
 
     <h1>comments</h1>
     <input type="text" id="commentInput">
@@ -44,46 +35,12 @@
             </li>
             <% } %>
     </ul>
-</body>
-<script>
-    const postId = '<%=post._id%>';
-    const owner = '<%=post.owner%>'
-    // console.log(owner)
-    const followButton = document.querySelector('#followButton')
-    followButton.addEventListener('click', () => {
-        console.log('clicked');
-        fetch(`/user/${owner}/follow`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({})
-        }).then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-            .then(data => {
-                console.log('Fetch successful:', data);
-                console.log(data);
-                if (data === 'followed') {
-                    followButton.innerHTML = 'unfollow';
-                } else if (data === 'unfollowed') {
-                    followButton.innerHTML = 'follow';
-                }
-            })
-            .catch(error => {
-                console.error('There was a problem with the fetch operation:', error);
-            });
-    })
-
-
-
-</script>
-<script src="/scripts/addComments.js"></script>
-<script src="/scripts/deleteComments.js"></script>
-<script src="/scripts/likes.js"></script>
-<script src="/scripts/saved.js"></script>
-
-</html>
+    <script>
+        const postId = '<%=post._id%>';
+        const owner = '<%=post.owner%>'
+    </script>
+    <script src="/scripts/addComments.js"></script>
+    <script src="/scripts/deleteComments.js"></script>
+    <script src="/scripts/likes.js"></script>
+    <script src="/scripts/saved.js"></script>
+    <script src="/scripts/follow.js"></script>

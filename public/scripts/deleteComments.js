@@ -12,9 +12,8 @@ commentsList.addEventListener('click', (event) => {
 
 function deleteComment(commentId, listItem) {
     console.log('Deleting comment with ID:', commentId);
-    const url = `/posts/${postId}/comments/${commentId}/delete`;
 
-    fetch(url, {
+    fetch(`/posts/${postId}/comments/${commentId}/delete`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
@@ -30,6 +29,7 @@ function deleteComment(commentId, listItem) {
         .then(data => {
             console.log('Fetch successful:', data);
             // Remove the corresponding list item from the DOM
+            if(data!='failed')
             listItem.remove();
         })
         .catch(error => {

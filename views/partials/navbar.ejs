@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flowbite Navigation with Notification Panel</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .grey-icon {
+            fill: gray;
+            /* Initial color */
+        }
+
+        .grey-icon:hover {
+            fill: black;
+            /* Color on click */
+        }
+    </style>
+</head>
+
+<body class="font-sans antialiased bg-gray-100">
+    <h1></h1>
+
+    <header class="antialiased">
+        <nav class="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
+            <div class="flex flex-wrap justify-between items-center">
+                <div class="flex justify-start items-center">
+                    <a href="/" class="flex mr-4">
+                        <img src="../../images/Echo (1).png" class="mr-3 h-8" alt="FlowBite Logo" />
+                        <span
+                            class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">EchoPages</span>
+                    </a>
+                    <form action="#" method="GET" class="hidden lg:block lg:pl-2">
+                        <label for="topbar-search" class="sr-only">Search</label>
+                        <div class="relative mt-1 lg:w-96">
+                            <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                                </svg>
+                            </div>
+                            <input type="text" name="email" id="topbar-search"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-9 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                placeholder="Search">
+                        </div>
+                    </form>
+                </div>
+                <div class="flex items-center lg:order-2">
+                    <a href="/posts"
+                        class="p-2 text-gray-500 rounded-lg hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600">
+
+                        <span class="sr-only">All Pages</span>All Pages</a>
+                    <button type="button" id="notificationIcon" data-dropdown-toggle="notification-dropdown"
+                        class="p-2 mr-1 text-gray-500 rounded-lg hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600">
+                        <span class="sr-only" id="notificationIcon">View notifications</span>
+                        <!-- Bell icon -->
+                        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                            viewBox="0 0 14 20">
+                            <path
+                                d="M12.133 10.632v-1.8A5.406 5.406 0 0 0 7.979 3.57.946.946 0 0 0 8 3.464V1.1a1 1 0 0 0-2 0v2.364a.946.946 0 0 0 .021.106 5.406 5.406 0 0 0-4.154 5.262v1.8C1.867 13.018 0 13.614 0 14.807 0 15.4 0 16 .538 16h12.924C14 16 14 15.4 14 14.807c0-1.193-1.867-1.789-1.867-4.175ZM3.823 17a3.453 3.453 0 0 0 6.354 0H3.823Z" />
+                        </svg>
+                    </button>
+                    <!-- Dropdown menu -->
+                    <div class="hidden overflow-hidden z-50 my-4 max-w-sm text-base list-none bg-white rounded divide-y divide-gray-100 shadow-lg dark:divide-gray-600 dark:bg-gray-700"
+                        id="notification-dropdown">
+                        <div
+                            class="block py-2 px-4 text-base font-medium text-center text-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            Notifications
+                        </div>
+                        <div id="notificationList">
+                            <!-- ////////////////////////////////////////////////////////// -->
+                            <a href="#" class="flex py-3 px-4 hover:bg-gray-100 dark:hover:bg-gray-600" class="echo-pages-notification">
+                                <div class="flex-shrink-0">
+                                </div>
+                                <div class="pl-3 w-full">
+                                    <div class="text-gray-500 font-normal text-sm mb-1.5 dark:text-gray-400"><span
+                                            class="font-semibold text-gray-900 dark:text-white">Echo Pages</span>
+                                        Important Announcement : New Feature Updates 
+                                    </div>
+                                    <div class="text-xs font-medium text-primary-700 dark:text-primary-400">3 hours ago
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <a href="/user/notifications"
+                            class="block py-2 text-base font-medium text-center text-gray-900 bg-gray-50 hover:bg-gray-100 dark:bg-gray-700 dark:text-white dark:hover:underline">
+                            <div class="inline-flex items-center ">
+                                <svg aria-hidden="true" class="mr-2 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path>
+                                    <path fill-rule="evenodd"
+                                        d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                View all
+                            </div>
+                        </a>
+                    </div>
+                    <!-- Apps -->
+
+                    <a href="/posts/new" id="create-page-link"
+                        class="p-2 text-gray-500 rounded-lg hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600">
+                        <span class="sr-only">Create Page</span>
+                        <!-- Icon -->
+                        <svg class="grey-icon" width="25" height="25" viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <rect x="0" fill="none" width="20" height="20" />
+                            <g>
+                                <path
+                                    d="M16.89 1.2l1.41 1.41c.39.39.39 1.02 0 1.41L14 8.33V18H3V3h10.67l1.8-1.8c.4-.39 1.03-.4 1.42 0zm-5.66 8.48l5.37-5.36-1.42-1.42-5.36 5.37-.71 2.12z" />
+                            </g>
+                        </svg>
+                    </a>
+
+
+
+                    <!-- Dropdown menu -->
+
+                    <button type="button"
+                        class="flex mx-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+                        id="user-menu-button" aria-expanded="false" data-dropdown-toggle="dropdown">
+                        <span class="sr-only">Open user menu</span>
+                        <img class="w-8 h-8 rounded-full"
+                            src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo">
+                    </button>
+                    <!-- Dropdown menu -->
+                    <div class="hidden z-50 my-4 w-56 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
+                        id="dropdown">
+                        <div class="py-3 px-4">
+                            <span class="block text-sm font-semibold text-gray-900 dark:text-white">Neil sims</span>
+                            <span
+                                class="block text-sm text-gray-500 truncate dark:text-gray-400">name@flowbite.com</span>
+                        </div>
+                        <ul class="py-1 text-gray-500 dark:text-gray-400" aria-labelledby="dropdown">
+                            <li>
+                                <a href="/user/profile"
+                                    class="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-400 dark:hover:text-white">My
+                                    profile</a>
+                            </li>
+                            <li>
+                                <a href="#"
+                                    class="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-400 dark:hover:text-white">Account
+                                    settings</a>
+                            </li>
+                        </ul>
+                        <ul class="py-1 text-gray-500 dark:text-gray-400" aria-labelledby="dropdown">
+                            <li>
+                                <a href="#"
+                                    class="flex items-center py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                    <svg class="mr-2 w-4 h-4 text-gray-400" aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
+                                        <path
+                                            d="M17.947 2.053a5.209 5.209 0 0 0-3.793-1.53A6.414 6.414 0 0 0 10 2.311 6.482 6.482 0 0 0 5.824.5a5.2 5.2 0 0 0-3.8 1.521c-1.915 1.916-2.315 5.392.625 8.333l7 7a.5.5 0 0 0 .708 0l7-7a6.6 6.6 0 0 0 2.123-4.508 5.179 5.179 0 0 0-1.533-3.793Z" />
+                                    </svg>
+                                    Liked Pages
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/posts/saved"
+                                    class="flex items-center py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                    <svg class="mr-2 w-4 h-4 text-gray-400" aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                        <path
+                                            d="m1.56 6.245 8 3.924a1 1 0 0 0 .88 0l8-3.924a1 1 0 0 0 0-1.8l-8-3.925a1 1 0 0 0-.88 0l-8 3.925a1 1 0 0 0 0 1.8Z" />
+                                        <path
+                                            d="M18 8.376a1 1 0 0 0-1 1v.163l-7 3.434-7-3.434v-.163a1 1 0 0 0-2 0v.786a1 1 0 0 0 .56.9l8 3.925a1 1 0 0 0 .88 0l8-3.925a1 1 0 0 0 .56-.9v-.786a1 1 0 0 0-1-1Z" />
+                                        <path
+                                            d="M17.993 13.191a1 1 0 0 0-1 1v.163l-7 3.435-7-3.435v-.163a1 1 0 1 0-2 0v.787a1 1 0 0 0 .56.9l8 3.925a1 1 0 0 0 .88 0l8-3.925a1 1 0 0 0 .56-.9v-.787a1 1 0 0 0-1-1Z" />
+                                    </svg>
+                                    Saved Pages
+                                </a>
+                            </li>
+
+                        </ul>
+                        <ul class="py-1 text-gray-500 dark:text-gray-400" aria-labelledby="dropdown">
+                            <li>
+                                <a href="#"
+                                    class="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sign
+                                    out</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <script>
+        function timeAgo(timestamp) {
+            const seconds = Math.floor((Date.now() - new Date(timestamp).getTime()) / 1000);
+
+            let interval = Math.floor(seconds / 31536000);
+            if (interval > 1) {
+                return `${interval} years ago`;
+            }
+            interval = Math.floor(seconds / 2592000);
+            if (interval > 1) {
+                return `${interval} months ago`;
+            }
+            interval = Math.floor(seconds / 86400);
+            if (interval > 1) {
+                return `${interval} days ago`;
+            }
+            interval = Math.floor(seconds / 3600);
+            if (interval > 1) {
+                return `${interval} hours ago`;
+            }
+            interval = Math.floor(seconds / 60);
+            if (interval > 1) {
+                return `${interval} minutes ago`;
+            }
+            return `${Math.floor(seconds)} seconds ago`;
+        }
+        const userId = '<%=userId%>';
+        const notificationButton = document.querySelector('#notificationIcon');
+
+        notificationButton.addEventListener('click', () => {
+    console.log('clicked')
+    fetch(`/user/${userId}/notifications`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    }).then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    }).then(data => {
+        console.log('Fetch successful:', data);
+        const notificationList = document.querySelector('#notificationList');
+
+        // Clear previous notifications except for EchoPages
+        const existingEchoPagesNotification = notificationList.querySelector('.echo-pages-notification');
+        console.log(existingEchoPagesNotification)
+        notificationList.innerHTML = '';
+        if (existingEchoPagesNotification) {
+            notificationList.appendChild(existingEchoPagesNotification);
+        }
+
+        // Iterate over fetched notifications and append them to the notification list
+        const getMessage = function (notificationType) {
+            switch (notificationType) {
+                case 'like':
+                    return `liked your post`;
+                case 'comment':
+                    return `commented on your post`;
+                case 'follow':
+                    return `started following you`;
+                default:
+                    return `performed an action`;
+            }
+        };
+        data.forEach(notification => {
+            const anchorTag = document.createElement('a');
+            anchorTag.classList.add('flex', 'py-3', 'px-4', 'hover:bg-gray-100', 'dark:hover:bg-gray-600');
+
+            // Build the HTML structure for each notification
+            anchorTag.innerHTML = `<div class="flex-shrink-0">
+    <img class="w-11 h-11 rounded-full"
+        src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/robert-brown.png"
+        alt="Robert image">
+    <div
+        class="flex absolute justify-center items-center ml-6 -mt-5 w-5 h-5 bg-purple-500 rounded-full border border-white dark:border-gray-700">
+        <svg class="w-2 h-2 text-white" aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 14">
+            <path
+                d="M11 0H2a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm8.585 1.189a.994.994 0 0 0-.9-.138l-2.965.983a1 1 0 0 0-.685.949v8a1 1 0 0 0 .675.946l2.965 1.02a1.013 1.013 0 0 0 1.032-.242A1 1 0 0 0 20 12V2a1 1 0 0 0-.415-.811Z" />
+        </svg>
+    </div>
+</div>
+<div class="pl-3 w-full">
+    <div class="text-gray-500 font-normal text-sm mb-1.5 dark:text-gray-400"><span
+            class="font-semibold text-gray-900 dark:text-white">${notification.actionBy.name}</span>
+        ${getMessage(notification.notificationType)} ${notification.notificationType != 'follow' ? `<a href='/posts/${notification.postId}' class='font-bold'>${notification.postId.title}</a>` : ''}
+    </div>
+    <div class="text-xs font-medium text-primary-700 dark:text-primary-400">3 hours ago
+    </div>
+</div>`;
+
+            // Set a class to identify the notification for EchoPages
+            if (notification.actionBy.name === 'Echo Pages') {
+                anchorTag.classList.add('echo-pages-notification');
+            }
+
+            // Append the built notification HTML to the notification list
+            anchorTag.setAttribute('class', "flex py-3 px-4 hover:bg-gray-100 dark:hover:bg-gray-600");
+            notificationList.appendChild(anchorTag);
+        });
+    }).catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+    });
+});
+
+    </script>
+
+    <script src="https://unpkg.com/@themesberg/flowbite@1.1.1/dist/flowbite.bundle.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@2.x/dist/alpine.min.js" defer></script>
+</body>
+
+</html>

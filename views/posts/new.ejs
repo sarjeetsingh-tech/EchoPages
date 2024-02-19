@@ -1,13 +1,4 @@
-<!-- views/new-post.ejs -->
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create New Post</title>
-</head>
-<body>
+<% layout('layouts/boilerplate') -%>
     <h1>Create New Post</h1>
     <form action="/posts" method="POST">
         <label for="title">Title:</label><br>
@@ -22,6 +13,5 @@
         <button type="submit">Submit</button>
     </form>
     <a href="/posts">cancel</a>
+
     
-</body>
-</html>
