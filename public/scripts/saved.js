@@ -1,4 +1,5 @@
 const saveButton = document.querySelector('#saveButton');
+const saveButtonText=document.querySelector('.saveButtonText')
     saveButton.addEventListener('click', () => {
         console.log('clicked');
         fetch(`/posts/${postId}/save`, {
@@ -17,9 +18,9 @@ const saveButton = document.querySelector('#saveButton');
             .then(data => {
                 console.log('Fetch successful:', data);
                 if (data === 'saved') {
-                    saveButton.innerHTML = 'unsave';
+                    saveButtonText.innerHTML = 'unsave';
                 } else if (data === 'unsaved') {
-                    saveButton.innerHTML = 'save';
+                    saveButtonText.innerHTML = 'save';
                 }
             })
             .catch(error => {

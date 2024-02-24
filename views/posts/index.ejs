@@ -1,35 +1,102 @@
 <% layout('layouts/boilerplate') -%>
-<% for( let post of posts ) { %>
-<div class="dark:bg-gray-800 dark:text-gray-100">
-    <div class="container max-w-4xl px-10 py-6 mx-auto rounded-lg shadow-sm dark:bg-gray-900">
-        <div class="flex items-center justify-between">
-            <span class="text-sm dark:text-gray-400">
-                <%=post.publicationDate%>
-            </span>
-            <a rel="noopener noreferrer" href="#"
-                class="px-2 py-1 font-bold rounded dark:bg-violet-400 dark:text-gray-900">Javascript</a>
-        </div>
-        <div class="mt-3">
-            <a rel="noopener noreferrer" href="#" class="text-2xl font-bold hover:underline">
-                <%= post.title %>
-            </a>
-            <div class="mt-2" style="max-height: 3em; overflow: hidden;">
-                <%= post.content %><span class="ellipsis">...</span>
-            </div>
-        </div>
-        <div class="flex items-center justify-between mt-4">
-            <a rel="noopener noreferrer" href="/posts/<%= post._id %>"
-                class="hover:underline dark:text-violet-400">Read more</a>
-            <div>
-                <a rel="noopener noreferrer" href="#" class="flex items-center">
-                    <img src="https://source.unsplash.com/50x50/?portrait" alt="avatar"
-                        class="object-cover w-10 h-10 mx-4 rounded-full dark:bg-gray-500">
-                    <span class="hover:underline dark:text-gray-400">
-                        <%= post.author %>
-                    </span>
-                </a>
+    <div class="flex flex-row items-center mt-2">
+        <div class="flex-grow border-b-2 border-gray-200 mx-5"></div>
+        <div>
+            <div class="flex items-center">
+                <div class=" inline-block text-left">
+                    <div>
+                        <button type="button"
+                            class="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900"
+                            id="menu-button" aria-expanded="false" aria-haspopup="true" onclick="toggleDropdown()">
+                            Sort
+                            <svg class="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
+                                viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                <path fill-rule="evenodd"
+                                    d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Dropdown menu, show/hide based on menu state -->
+                    <div id="dropdown-menu"
+                        class=" cursor-pointer absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none hidden"
+                        role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+                        <div class="py-1" role="none">
+                            <a href="?sort=liked" class="text-gray-500 block px-4 py-2 text-sm hover:text-gray-900"
+                                role="menuitem" tabindex="-1" id="menu-item-1">Most Liked</a>
+                            <a href="?sort=new-old" class="text-gray-500 block px-4 py-2 text-sm hover:text-gray-900"
+                                role="menuitem" tabindex="-1" id="menu-item-3">Date: New to Old</a>
+                            <a href="?sort=old-new" class="text-gray-500 block px-4 py-2 text-sm hover:text-gray-900"
+                                role="menuitem" tabindex="-1" id="menu-item-4">Date: Old to New</a>
+                                <div class="px-4 hover:bg-gray-100">
+                            <p  class="text-gray-800 font-semibold block px-4 py-2 text-m text-center border-t border-gray-300 hover:text-gray-900"
+                                role="menuitem" tabindex="-1" id="menu-item-2" onclick="toggleDropdown()">Cancel</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<% } %>
+
+    <form method="GET" action="/posts" id="searchbar"
+        class="dropdown-menu shadow-lg fixed bottom-8 right-4 mt-5  flex items-center w-1/4  h-14 rounded-lg focus-within:shadow-lg bg-white overflow-hidden border-b border-gray-300">
+        <div class="grid place-items-center h-full w-12 text-gray-300">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+        </div>
+        <input class="peer h-full w-full outline-none text-sm text-gray-700 pr-2" type="text" id="search" name="q"
+            placeholder="Search something.." />
+    </form>
+
+    <% for( let post of posts ) { %>
+
+        <div class="container grid grid-cols-12 mx-auto  dark:bg-gray-900 p-2">
+            <div class="bg-no-repeat dark:bg-gray-700 col-span-full lg:col-span-4"
+                style="background-image: url('https://source.unsplash.com/random/640x480'); background-position: center center; background-blend-mode: multiply; background-size: cover;">
+            </div>
+            <div class="flex flex-col p-6 col-span-full row-span-full lg:col-span-8 lg:p-10">
+                <div class="flex justify-start">
+                    <span class="px-2 py-1 text-xs rounded-full dark:bg-violet-400 dark:text-gray-900">Label</span>
+                </div>
+                <h1 class="text-3xl font-semibold">
+                    <%=post.title%>
+                </h1>
+                <p class="flex-1 pt-2 line-clamp-3">
+                    <%= post.content%>
+                </p>
+                <a rel="noopener noreferrer" href="/posts/<%= post._id %>"
+                    class="inline-flex items-center pt-2 pb-6 space-x-2 text-sm dark:text-violet-400">
+                    <span>Read more</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4">
+                        <path fill-rule="evenodd"
+                            d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                </a>
+                <div class="flex items-center justify-between pt-2">
+                    <div class="flex space-x-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                            class="w-5 h-5 dark:text-gray-400">
+                            <path fill-rule="evenodd"
+                                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="self-center text-sm">by <%= post.author %></span>
+                    </div>
+                    <span class="text-xs">3 min read</span>
+                </div>
+            </div>
+        </div>
+        <% } %>
+
+            <script>
+                function toggleDropdown() {
+                    const dropdownMenu = document.getElementById('dropdown-menu');
+                    dropdownMenu.classList.toggle('hidden'); // Toggle the 'hidden' class
+                }
+            </script>

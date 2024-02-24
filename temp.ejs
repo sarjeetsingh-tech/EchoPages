@@ -16,19 +16,12 @@
             fill: black;
             /* Color on click */
         }
-    .line-clamp-3 {
-        display: -webkit-box;
-        -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;  
-        overflow: hidden;
-    }
-
     </style>
 </head>
 
-<body class="font-sans antialiased">
-    <nav class="bg-white border-gray-200 dark:bg-gray-900 shadow-md sticky h-14 top-0">
-        <div class=" flex flex-wrap items-center justify-between mx-auto p-2">
+<body class="font-sans antialiased bg-gray-100">
+    <nav class="bg-white border-gray-200 dark:bg-gray-900">
+        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
             <a href="https://flowbite.com/" class="flex items-center space-x-3 rtl:space-x-reverse">
                 <img src="/images/Echo (1).png" class="h-8" alt="Flowbite Logo" />
                 <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">EchoPages</span>
@@ -39,7 +32,7 @@
                     id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown"
                     data-dropdown-placement="bottom">
                     <span class="sr-only">Open user menu</span>
-                    <img class="w-8 h-8 rounded-full" src="" alt="user photo">
+                    <img class="w-8 h-8 rounded-full" src="/docs/images/people/profile-picture-3.jpg" alt="user photo">
                 </button>
                 <!-- Dropdown menu -->
                 <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600"
@@ -65,11 +58,10 @@
                             <a href="/posts/saved"
                                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Saved</a>
                         </li>
-                        <li><form action="/user/signout" method="post">
-                            <button type="submit"
+                        <li>
+                            <a href="#"
                                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign
-                                out</button>
-                            </form>
+                                out</a>
                         </li>
                     </ul>
                 </div>
@@ -88,24 +80,30 @@
                 <ul
                     class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
                     <li>
-                        <a href="/posts"
-                            class="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-gray-900 hover:text-blue-700 md:p-0 md:dark:text-blue-500"
+                        <a href="#"
+                            class="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500"
                             aria-current="page">All Pages</a>
                     </li>
                     <li>
-                        <a href="/posts/new"
-                            class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500">Create</a>
+                        <a href="#"
+                            class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Trending</a>
                     </li>
                     <li>
+                        <a href="#"
+                            class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Create</a>
+                    </li>
+                    <li>
+
                         <div>
                             <div x-data="{ dropdownOpen: false }" class="relative">
-                                <button @click="dropdownOpen = !dropdownOpen" 
-                                    class=" z-10 block rounded-md bg-white p focus:outline-none flex flex-col justify-start items-center"
-                                    id="notificationIcon">
-                                    <span class="mt-0 font-medium text-gray-800 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Notifications</span>
-                                    <!-- Your SVG icon -->
+                                <button @click="dropdownOpen = !dropdownOpen"
+                                    class="relative z-10 block rounded-md bg-white p-2 focus:outline-none">
+                                    <svg class="h-5 w-5 text-gray-800" xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 20 20" fill="currentColor">
+                                        <path
+                                            d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
+                                    </svg>
                                 </button>
-
 
                                 <div x-show="dropdownOpen" @click="dropdownOpen = false"
                                     class="fixed inset-0 h-full w-full z-10"></div>
@@ -114,11 +112,19 @@
                                     class="absolute right-0 mt-2 bg-white rounded-md shadow-lg overflow-hidden z-20"
                                     style="width:20rem;">
                                     <div class="py-2" id="notificationList">
-                                    </div>
-                                    <div class="py-2" id="dropdown">
 
+                                        <a href="#" class="flex items-center px-4 py-3 hover:bg-gray-100 -mx-2">
+                                            <img class="h-8 w-8 rounded-full object-cover mx-1"
+                                                src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=398&q=80"
+                                                alt="avatar">
+                                            <p class="text-gray-600 text-sm mx-2">
+                                                <span class="font-bold" href="#">Abigail Bennett</span> start following
+                                                you . 3h
+                                            </p>
+                                        </a>
                                     </div>
-
+                                    <a href="#" class="block bg-gray-800 text-white text-center font-bold py-2">See all
+                                        notifications</a>
                                 </div>
                             </div>
                         </div>
@@ -171,9 +177,15 @@
                 return response.json();
             }).then(data => {
                 console.log('Fetch successful:', data);
-                // console.log(data.length)
                 const notificationList = document.querySelector('#notificationList');
+                // Clear previous notifications except for EchoPages
+                const existingEchoPagesNotification = notificationList.querySelector('.echo-pages-notification');
+                console.log(existingEchoPagesNotification)
                 notificationList.innerHTML = '';
+                if (existingEchoPagesNotification) {
+                    notificationList.appendChild(existingEchoPagesNotification);
+                }
+
                 // Iterate over fetched notifications and append them to the notification list
                 const getMessage = function (notificationType) {
                     switch (notificationType) {
@@ -198,36 +210,40 @@
                         anchorTag.classList.add('flex', 'py-3', 'px-4', 'items-center', 'hover:bg-gray-100', '-mx-2');
 
                         // Build the HTML structure for each notification
-                        anchorTag.innerHTML = `<img class="h-8 w-8 rounded-full object-cover mx-1"
-                                                src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=398&q=80"
-                                                alt="avatar">
-                                                <div class="text-gray-500 font-normal text-sm mb-1.5 dark:text-gray-400"><span
-                        class="font-semibold text-gray-900 dark:text-white"><a href='/user/${notification.actionBy._id}/profile'>${notification.actionBy.name}</span>
-                         ${getMessage(notification.notificationType)} ${notification.notificationType != 'follow' ? `<a href='/posts/${notification.postId._id}' class='font-bold'>${notification.postId.title}</a>` : ''}
-                        </div>`    ;
+                        anchorTag.innerHTML
+                            = `<div class="flex-shrink-0">
+        <img class="w-11 h-11 rounded-full"
+            src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/robert-brown.png"
+            alt="Robert image">
+        <div
+            class="flex absolute justify-center items-center ml-6 -mt-5 w-5 h-5 bg-purple-500 rounded-full border border-white dark:border-gray-700">
+            <svg class="w-2 h-2 text-white" aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 14">
+                <path
+                    d="M11 0H2a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm8.585 1.189a.994.994 0 0 0-.9-.138l-2.965.983a1 1 0 0 0-.685.949v8a1 1 0 0 0 .675.946l2.965 1.02a1.013 1.013 0 0 0 1.032-.242A1 1 0 0 0 20 12V2a1 1 0 0 0-.415-.811Z" />
+            </svg>
+        </div>
+    </div>
+    <div class="pl-3 w-full">
+        <div class="text-gray-500 font-normal text-sm mb-1.5 dark:text-gray-400"><span
+                class="font-semibold text-gray-900 dark:text-white"><a href='/user/${notification.actionBy._id}/profile'>${notification.actionBy.name}</span>
+            ${getMessage(notification.notificationType)} ${notification.notificationType != 'follow' ? `<a href='/posts/${notification.postId._id}' class='font-bold'>${notification.postId.title}</a>` : ''}
+        </div>
+        <div class="text-xs font-medium text-primary-700 dark:text-primary-400">3 hours ago
+        </div>
+    </div>`;
 
+                        // Set a class to identify the notification for EchoPages
+                        if (notification.actionBy.name === 'Echo Pages') {
+                            anchorTag.classList.add('echo-pages-notification');
+                        }
+
+                        // Append the built notification HTML to the notification list
                         anchorTag.setAttribute('class', "flex py-3 px-4 hover:bg-gray-100 dark:hover:bg-gray-600");
                         notificationList.appendChild(anchorTag);
-
-
                         count++; // Increment the count of notifications appended
                     }
                 });
-                const dropdown = document.querySelector('#dropdown');
-                dropdown.innerHTML = ''
-                if (data.length == 0) {
-                    const info = document.createElement('p');
-                    info.innerHTML = 'No New Notifications';
-                    info.classList.add('block', 'bg-gray-100', 'text-center', 'font-bold', 'py-2');
-                    dropdown.appendChild(info)
-                } else {
-                    const anc = document.createElement('a');
-                    anc.classList.add('block', 'bg-gray-100', 'text-center', 'font-bold', 'py-2');
-
-                    anc.innerHTML = `See all notifications`;
-                    anc.setAttribute('href','/user/notifications')
-                    dropdown.appendChild(anc);
-                }
             }).catch(error => {
                 console.error('There was a problem with the fetch operation:', error);
             });

@@ -9,14 +9,22 @@
 </head>
 
 <body>
+
     <%- include('../partials/navbar')%>
-        <div class="container mx-auto">
-            <!-- Your content here -->
+
+        <div class="container mx-auto mt-2">
+            <% if ((successFlash&&successFlash.length)||errorFlash&&errorFlash.length) { %>
+                <div class="flex justify-end items-center">
+                    <%- include('../partials/flash') %>
+                </div>
+                <% } %>
+
+                    <!-- Your content here -->
 
 
 
-            <%- body -%>
-                <h1>footer</h1>
+                    <%- body -%>
+
         </div>
 </body>
 

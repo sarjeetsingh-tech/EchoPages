@@ -8,3 +8,6 @@ const commentSchema = new mongoose.Schema({
 })
 const Comment = mongoose.model('Comment', commentSchema);
 module.exports = Comment;
+commentSchema.post('findOneAndDelete',async(doc)=>{
+   console.log(doc);
+})

@@ -1,0 +1,32 @@
+<div class="relative flex flex-col sm:flex-row sm:items-center bg-white shadow rounded-md py-5 pl-6 pr-8 sm:pr-6"
+    id="successMessage">
+
+    <div class="text-sm tracking-wide text-gray-900 p-1 mt-4 mr-4 sm:mt-0 sm:ml-4">
+        <% if (successFlash) { %>
+            <%= successFlash %>!
+                <% }else{%>
+                    <%=errorFlash%>;
+                        <% } %>
+    </div>
+    <div class="absolute top-0 right-0 mt-2 mr-2 text-gray-400 hover:text-gray-800 cursor-pointer" id="dismissButton">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+    </div>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const dismissButton = document.getElementById('dismissButton');
+        const successMessage = document.getElementById('successMessage');
+
+        dismissButton.addEventListener('click', function () {
+            successMessage.style.display = 'none';
+        });
+    });
+</script>
+
+<style>
+    #successMessage {
+        top: 0;
+    }
+</style>

@@ -2,10 +2,14 @@ const commentsList = document.querySelector('#commentsList');
 
 // Add event listener to the comments list to listen for clicks on delete buttons
 commentsList.addEventListener('click', (event) => {
+
     if (event.target.classList.contains('deleteCommentButton')) {
+        // console.log(event.target)
         const deleteButton = event.target;
         const commentId = deleteButton.getAttribute('data-comment-id');
+        // console.log(commentId)
         const listItem = deleteButton.parentElement;
+        // console.log(listItem)
         deleteComment(commentId, listItem);
     }
 });

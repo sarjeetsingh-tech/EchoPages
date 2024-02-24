@@ -4,11 +4,11 @@ const followerSchema = new mongoose.Schema({
         type: mongoose.Schema.ObjectId,
         ref: 'User',
     },
-    following : [{
+    followings : [{
         type: mongoose.Schema.ObjectId,
         ref: 'User'
     }],
-    followedBy:[{
+    followers:[{
         type:mongoose.Schema.ObjectId,
         ref:'User'
     }]

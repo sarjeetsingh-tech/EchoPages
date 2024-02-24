@@ -21,6 +21,10 @@ const postSchema = new mongoose.Schema({
         type: mongoose.Schema.ObjectId,
         ref: 'User'
     },
+    date:{
+        type:Date,
+        default:Date.now
+    },
     publicationDate:{
         type: String, // Changed to String
         default: () => moment().format("MMM D, YYYY") 
