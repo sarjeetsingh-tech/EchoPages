@@ -49,6 +49,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 app.use(methodOverride('_method'))
 app.use(express.static('public'))
+app.use(flash());
 
 app.use(session({
     secret: 'keyboard cat',
@@ -68,11 +69,13 @@ app.use((req, res, next) => {
     req.user = { _id: "65d780cffde7d5844f2ce78d", name: 'Sarjeet Singh', email: "sarjeetsingh4680@gmail.com" };
     next();
 })
+
 app.use((req,res,next)=>{
     res.locals.successFlash=req.flash('success');
     res.locals.errorFlash=req.flash('error');
     next();
 })
+
 const attachUserId = (req, res, next) => {
     if (req.user) {
         res.locals.userId = req.user._id;
@@ -83,24 +86,6 @@ const attachUserId = (req, res, next) => {
 };
 app.use(attachUserId);
 
-const reduceNotifications = async function (req, res, next) {
-    try {
-        const data = await Notification.findOne({ userId: req.user._id });
-        if (data.notifications.length > 50) {
-            // Sort notifications by createdAt date in ascending order
-            data.notifications.sort((a, b) => a.createdAt - b.createdAt);
-
-            // Remove the oldest notification
-            data.notifications.shift();
-            // Save the updated data
-            await data.save();
-        }
-        next();
-    } catch (error) {
-        // Handle errors
-        next(error);
-    }
-};
 app.use('/', homeRoute);
 app.use('/', postRoute);
 app.use('/', commentRoute)
@@ -109,10 +94,6 @@ app.use('/', saveRoute)
 app.use('/', userRoute);
 app.use('/', followRoute);
 app.use('/', userUtilRoute)
-
-
-
-
 
 
 
