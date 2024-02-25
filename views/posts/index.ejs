@@ -29,9 +29,9 @@
                                 role="menuitem" tabindex="-1" id="menu-item-3">Date: New to Old</a>
                             <a href="?sort=old-new" class="text-gray-500 block px-4 py-2 text-sm hover:text-gray-900"
                                 role="menuitem" tabindex="-1" id="menu-item-4">Date: Old to New</a>
-                                <div class="px-4 hover:bg-gray-100">
-                            <p  class="text-gray-800 font-semibold block px-4 py-2 text-m text-center border-t border-gray-300 hover:text-gray-900"
-                                role="menuitem" tabindex="-1" id="menu-item-2" onclick="toggleDropdown()">Cancel</p>
+                            <div class="px-4 hover:bg-gray-100">
+                                <p class="text-gray-800 font-semibold block px-4 py-2 text-m text-center border-t border-gray-300 hover:text-gray-900"
+                                    role="menuitem" tabindex="-1" id="menu-item-2" onclick="toggleDropdown()">Cancel</p>
                             </div>
                         </div>
                     </div>
@@ -41,7 +41,7 @@
     </div>
 
     <form method="GET" action="/posts" id="searchbar"
-        class="dropdown-menu shadow-lg fixed bottom-8 right-4 mt-5  flex items-center w-1/4  h-14 rounded-lg focus-within:shadow-lg bg-white overflow-hidden border-b border-gray-300">
+        class="dropdown-menu shadow-lg fixed bottom-8 right-4 mt-5  flex items-center w-1/4  h-14 rounded-lg focus-within:shadow-lg bg-white overflow-hidden border-b border-gray-300 absolute z-10">
         <div class="grid place-items-center h-full w-12 text-gray-300">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                 stroke="currentColor">
@@ -52,51 +52,85 @@
         <input class="peer h-full w-full outline-none text-sm text-gray-700 pr-2" type="text" id="search" name="q"
             placeholder="Search something.." />
     </form>
+    
+    <div class="relative flex flex-row h-full ">
+        <div class="border border-black w-full h-screen left absolute top-0 left-0 lg:overflow-y-scroll">
 
-    <% for( let post of posts ) { %>
+            <% for( let post of posts ) { %>
 
-        <div class="container grid grid-cols-12 mx-auto  dark:bg-gray-900 p-2">
-            <div class="bg-no-repeat dark:bg-gray-700 col-span-full lg:col-span-4"
-                style="background-image: url('https://source.unsplash.com/random/640x480'); background-position: center center; background-blend-mode: multiply; background-size: cover;">
-            </div>
-            <div class="flex flex-col p-6 col-span-full row-span-full lg:col-span-8 lg:p-10">
-                <div class="flex justify-start">
-                    <span class="px-2 py-1 text-xs rounded-full dark:bg-violet-400 dark:text-gray-900">Label</span>
-                </div>
-                <h1 class="text-3xl font-semibold">
-                    <%=post.title%>
-                </h1>
-                <p class="flex-1 pt-2 line-clamp-3">
-                    <%= post.content%>
-                </p>
-                <a rel="noopener noreferrer" href="/posts/<%= post._id %>"
-                    class="inline-flex items-center pt-2 pb-6 space-x-2 text-sm dark:text-violet-400">
-                    <span>Read more</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4">
-                        <path fill-rule="evenodd"
-                            d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
-                            clip-rule="evenodd"></path>
-                    </svg>
-                </a>
-                <div class="flex items-center justify-between pt-2">
-                    <div class="flex space-x-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
-                            class="w-5 h-5 dark:text-gray-400">
-                            <path fill-rule="evenodd"
-                                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"
-                                clip-rule="evenodd"></path>
-                        </svg>
-                        <span class="self-center text-sm">by <%= post.author %></span>
+                <div class="container border border-black w-full md:w-4/6 lg:4/6 grid grid-cols-12  dark:bg-gray-900 p-2">
+                    <div class="flex flex-col p-6 col-span-full row-span-full lg:col-span-8 lg:p-10">
+                        <div class="flex justify-start">
+                            <span
+                                class="px-2 py-1 text-xs rounded-full dark:bg-violet-400 dark:text-gray-900">Label</span>
+                        </div>
+                        <h1 class="text-3xl font-semibold">
+                            <%=post.title%>
+                        </h1>
+                        <p class="flex-1 pt-2 line-clamp-3">
+                            <%= post.content%>
+                        </p>
+                        <a rel="noopener noreferrer" href="/posts/<%= post._id %>"
+                            class="inline-flex items-center pt-2 pb-6 space-x-2 text-sm dark:text-violet-400">
+                            <span>Read more</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                class="w-4 h-4">
+                                <path fill-rule="evenodd"
+                                    d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                        </a>
+                        <div class="flex items-center justify-between pt-2">
+                            <div class="flex space-x-2">
+                                <img src="<%= post.avatar %>" alt="" class="w-7 h-7 rounded-full dark:text-gray-400">
+
+                                <span class="self-center text-sm">by <%= post.author %></span>
+                            </div>
+                            <span class="text-xs">3 min read</span>
+                        </div>
                     </div>
-                    <span class="text-xs">3 min read</span>
                 </div>
+                
+
+                <% } %>
+        </div>
+        <div
+            class="hidden sm:block border border-black h-screen w-2/6 right absolute top-0 right-0 overflow-y-scroll flex flex-col items-center">
+            <h3 class="text-center mt-2 text-2xl">Top Pages this Week 🔥</h3>
+
+            <div class="flex flex-col mt-5 px-3">
+                <% for( let trendingPost of trendingPosts ) { %>
+                    <a href="">
+                        <div class="max-w-md bg-white shadow-lg rounded-lg overflow-hidden mb-3">
+                            <div class="px-4 py-2">
+                                <h2 class="text-lg font-semibold text-gray-800">
+                                    <%=trendingPost.title %>
+                                </h2>
+                                <p class="text-sm text-gray-600">
+                                    <%= trendingPost.content %>
+                                </p>
+                            </div>
+                            <div class="flex items-center justify-between px-4 py-2 bg-gray-100">
+                                <span class="text-xs font-medium text-gray-600">
+                                    <%= trendingPost.author %>
+                                </span>
+                                <span class="text-xs text-gray-600">
+                                    <%= trendingPost.publicationDate %>
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                    <% } %>
             </div>
         </div>
-        <% } %>
 
-            <script>
-                function toggleDropdown() {
-                    const dropdownMenu = document.getElementById('dropdown-menu');
-                    dropdownMenu.classList.toggle('hidden'); // Toggle the 'hidden' class
-                }
-            </script>
+    </div>
+
+
+
+    <script>
+        function toggleDropdown() {
+            const dropdownMenu = document.getElementById('dropdown-menu');
+            dropdownMenu.classList.toggle('hidden'); // Toggle the 'hidden' class
+        }
+    </script>

@@ -1,4 +1,5 @@
 const Notification=require('../models/notifications');
+///////////---Not Using Right Now---////////////////////////
 const reduceNotifications = async function (req, res, next) {
     try {
         const data = await Notification.findOne({ userId: req.user._id });

@@ -9,26 +9,14 @@ const Save = require('../models/saved');
 const Follow = require('../models/followers');
 const Notification = require('../models/notifications')
 const reduceNotifications = require('../utils/reduceNotification')
+const isloggedIn=require('../middlewares/isloggedIn')
 
-router.post('/user/:authorId/follow', async (req, res, next) => {
+router.post('/user/:authorId/follow',isloggedIn, async (req, res, next) => {
     try {
         const { authorId } = req.params;
 
         let data_userSide = await Follow.findOne({ user: req.user._id });
-
-        if (!data_userSide) {
-            data_userSide = new Follow({ user: req.user._id, followings: [], followers: [] });
-            await data_userSide.save();
-        }
-
         let data_authorSide = await Follow.findOne({ user: authorId });
-
-        // If the follow data for the author doesn't exist, create a new document
-        if (!data_authorSide) {
-            data_authorSide = new Follow({ user: authorId, followings: [], followers: [] });
-            await data_authorSide.save();
-        }
-
 
         const isFollowing = data_userSide.followings && data_userSide.followings.some(i => i.equals(authorId));
 

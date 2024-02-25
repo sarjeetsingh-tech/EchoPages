@@ -10,7 +10,7 @@ const savedSchema = new mongoose.Schema({
             type: mongoose.Schema.ObjectId,
             ref: 'Post'
         }],
-        default: [] // Set default value to an empty array
+        default: []
     }
 });
 

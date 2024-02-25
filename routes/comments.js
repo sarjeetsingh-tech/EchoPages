@@ -9,34 +9,23 @@ const Save = require('../models/saved');
 const Follow = require('../models/followers');
 const Notification = require('../models/notifications')
 const reduceNotifications=require('../utils/reduceNotification')
+const isloggedIn=require('../middlewares/isloggedIn')
 
-router.post('/posts/:id/comment', async (req, res, next) => {
-    try {
+router.post('/posts/:id/comment',isloggedIn, async (req, res, next) => {
+ 
         const { id } = req.params;
         const user = await User.findOne({ _id: req.user._id });
         const post = await Post.findById({ _id: id }).populate('owner');
-        // console.log(post.owner._id);
-
-        // Find or create the notification document for the post owner
+        
         let notification = await Notification.findOne({ userId: post.owner._id });
-        if (!notification) {
-            notification = new Notification({
-                userId: post.owner._id,
-                notifications: [] // Initialize an empty array
-            });
-        }
 
-        // Push a new notification into the Notification array
         notification.notifications.push({
             postId: id,
             actionBy: req.user._id,
             notificationType: 'comment',
             checked: false,
         });
-        // Save the updated notification document
         await notification.save();
-
-        // console.log(post);
 
         const newComment = new Comment({
             comment: req.body.comment,
@@ -49,13 +38,10 @@ router.post('/posts/:id/comment', async (req, res, next) => {
         await post.save();
 
         res.send(JSON.stringify([newComment, user.username]));
-    } catch (err) {
-        next(new appError('Internal Server Error', 500));
-    }
+
 });
-router.delete('/posts/:postId/comments/:commentId/delete', async (req, res, next) => {
-    // console.log('deleted');
-    // try {
+router.delete('/posts/:postId/comments/:commentId/delete',isloggedIn, async (req, res, next) => {
+
     const { postId, commentId } = req.params;
     const comment = await Comment.findOne({ _id: commentId });
     const post = await Post.findOne({ _id: postId }).populate({
@@ -73,8 +59,5 @@ router.delete('/posts/:postId/comments/:commentId/delete', async (req, res, next
         res.send(JSON.stringify('deleted'));
     }
     else res.send(JSON.stringify('failed'))
-    // } catch (err) {
-    //     next(new appError('Internal Server Error', 500))
-    // }
 })
 module.exports=router;

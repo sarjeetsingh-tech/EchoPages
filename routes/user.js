@@ -12,7 +12,6 @@ const Save = require('../models/saved');
 const Follow = require('../models/followers');
 const Notification = require('../models/notifications')
 const reduceNotifications = require('../utils/reduceNotification')
-const initialize = require('../middlewares/initialize')
 const createInitialInstances = require('../utils/createInitialInstances');
 
 router.get('/user/signup', async (req, res, next) => {

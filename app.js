@@ -18,7 +18,16 @@ const Save = require('./models/saved');
 const Follow = require('./models/followers');
 const Notification = require('./models/notifications')
 const cleanupExpiredNotifications = require('./utils/notificationCleanup');
-setInterval(cleanupExpiredNotifications, 24 * 60 * 60 * 1000);
+
+setInterval(async () => {
+    try {
+        console.log('Cleaning up expired notifications...');
+        await cleanupExpiredNotifications();
+        console.log('Expired notifications cleaned up successfully.');
+    } catch (error) {
+        console.error('Error cleaning up expired notifications:', error);
+    }
+}, 12 * 60 * 60 * 1000);
 
 const homeRoute = require('./routes/home')
 const postRoute = require('./routes/posts')
@@ -126,12 +135,19 @@ app.get('/oauth2/redirect/google', passport.authenticate('google', {
     }
 });
 
-
-app.use((req, res, next) => {
-    res.locals.successFlash = req.flash('success');
-    res.locals.errorFlash = req.flash('error');
+app.use((req,res,next)=>{
+    console.log(req.isAuthenticated());
     next();
 })
+
+app.use((req, res, next) => {
+    console.log(req.user);
+    res.locals.successFlash = req.flash('success');
+    res.locals.errorFlash = req.flash('error');
+    res.locals.isloggedIn=req.isAuthenticated();
+    next();
+})
+
 app.use((req, res, next) => {
     res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, private');
     res.setHeader('Expires', '0');
@@ -145,8 +161,7 @@ const attachUserId = (req, res, next) => {
         res.locals.userName = req.user.username;
         res.locals.userEmail = req.user.email;
     } else {
-        // Set default values or handle the absence of user data as per your requirement
-        res.locals.userId = null;
+        res.locals.userId = '1';
         res.locals.userName = 'Guest';
         res.locals.userEmail = null;
     }
@@ -163,12 +178,6 @@ app.use('/', userRoute);
 app.use('/', followRoute);
 app.use('/', userUtilRoute)
 
-
-
-
-
-
-
 // app.all('*', (req, res, next) => {
 //     next(new appError('wrong path', 404));
 // })
@@ -177,7 +186,6 @@ app.use((err, req, res, next) => {
     res.status(status).send(message)
     next(err);
 })
-
 
 app.listen(PORT, () => {
     console.log("listening at port 3000");

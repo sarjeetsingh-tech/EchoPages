@@ -1,11 +1,8 @@
 const commentInput = document.querySelector('#commentInput');
 const commentSubmit = document.querySelector('#commentSubmit');
-// console.log(commentInput.value);
-// console.log(postId);
 
 commentSubmit.addEventListener('click', (event) => {
     event.preventDefault();
-    console.log('button clicked');
     fetch(`/posts/${postId}/comment`, {
         method: 'POST',
         headers: {
@@ -16,16 +13,15 @@ commentSubmit.addEventListener('click', (event) => {
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
-        return response.json(); // Parse JSON response
+        return response.json();
     }).then(data => {
-        console.log('Fetch successful:', data);
         const list = document.querySelector('#commentsList');
         const newListItem = document.createElement('li');
         const commentInput=document.querySelector('#commentInput');
         commentInput.value='';
 
         const deleteButton = document.createElement('button');
-        deleteButton.innerHTML=`    <svg fill="#000000" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+        deleteButton.innerHTML=`<svg fill="#000000" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
         class="h-4 w-4" viewBox="0 0 482.428 482.429"
         xml:space="preserve">
    <g>
@@ -51,9 +47,6 @@ commentSubmit.addEventListener('click', (event) => {
         deleteButton.setAttribute('class', 'ml-auto mr-5 flex items-center deleteCommentButton');
         deleteButton.setAttribute('data-comment-id', data[0]._id);
         
-
-        // Set the text content of newListItem
-        // newListItem.textContent = data[0].comment + ' - ' + data[1];
         newListItem.innerHTML=`<div class="flex p-2">
         <img class="w-12 h-12 border-2 border-gray-300 rounded-full m-2" alt="Anonymous's avatar"
             src="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&faces=1&faceindex=1&facepad=2.5&w=500&h=500&q=80">
@@ -62,30 +55,10 @@ commentSubmit.addEventListener('click', (event) => {
             <p>${data[0].comment}</p>
         </div>
     </div>`
-        // Append deleteButton as a child of newListItem
         newListItem.appendChild(deleteButton);
 
-        // Append newListItem as a child of the list
         list.appendChild(newListItem);
     }).catch(error => {
         console.error('There was a problem with the fetch operation:', error);
     });
 });
-
-
-{/* <li >
-<div class="flex flex-row md-10">
-    <img class="w-12 h-12 border-2 border-gray-300 rounded-full"
-        alt="Anonymous's avatar"
-        src="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&faces=1&faceindex=1&facepad=2.5&w=500&h=500&q=80">
-    <div class="flex-col mt-1">
-        <div class="flex items-center flex-1 px-4 font-bold leading-tight">
-            <%= comment.user.name %>
-                <span class="ml-2 text-xs font-normal text-gray-500">3 days ago</span>
-        </div>
-        <div class="flex-1 px-2 ml-2 text-sm font-medium leading-loose text-gray-600">
-            <%= comment.comment %>
-        </div>
-    </div>
-</div>
-</li> */}

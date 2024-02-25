@@ -13,7 +13,7 @@
     <%- include('../partials/navbar')%>
 
         <div class="container mx-auto mt-2">
-            <% if ((successFlash&&successFlash.length)||errorFlash&&errorFlash.length) { %>
+            <% if ((successFlash&&successFlash.length)||(errorFlash&&errorFlash.length)) { %>
                 <div class="flex justify-end items-center">
                     <%- include('../partials/flash') %>
                 </div>

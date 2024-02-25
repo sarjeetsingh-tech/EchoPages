@@ -14,8 +14,6 @@ followButton.addEventListener('click', () => {
         return response.json();
     })
         .then(data => {
-            console.log('Fetch successful:', data);
-            console.log(data);
             if (data === 'followed') {
                 followButton.innerHTML = 'unfollow';
             } else if (data === 'unfollowed') {

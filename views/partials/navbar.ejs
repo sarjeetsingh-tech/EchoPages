@@ -16,63 +16,67 @@
             fill: black;
             /* Color on click */
         }
-    .line-clamp-3 {
-        display: -webkit-box;
-        -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;  
-        overflow: hidden;
-    }
 
+        .line-clamp-3 {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
     </style>
 </head>
 
 <body class="font-sans antialiased">
     <nav class="bg-white border-gray-200 dark:bg-gray-900 shadow-md sticky h-14 top-0">
-        <div class=" flex flex-wrap items-center justify-between mx-auto p-2">
+        <div class="flex flex-wrap items-center justify-between mx-auto p-2">
             <a href="https://flowbite.com/" class="flex items-center space-x-3 rtl:space-x-reverse">
                 <img src="/images/Echo (1).png" class="h-8" alt="Flowbite Logo" />
-                <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">EchoPages</span>
+                <span class="self-center text-2xl font-semibold whitespace-nowrap  font-semibold ml-4 text-blue-500">Echo<span class="text-2xl text-blue-700">Pages</span></span>
             </a>
             <div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-                <button type="button"
-                    class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
-                    id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown"
-                    data-dropdown-placement="bottom">
-                    <span class="sr-only">Open user menu</span>
-                    <img class="w-8 h-8 rounded-full" src="" alt="user photo">
-                </button>
-                <!-- Dropdown menu -->
-                <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600"
-                    id="user-dropdown">
-                    <div class="px-4 py-3">
-                        <span class="block text-sm text-gray-900 dark:text-white">
-                            <%= userName %>
-                        </span>
-                        <span class="block text-sm  text-gray-500 truncate dark:text-gray-400">
-                            <%= userEmail %>
-                        </span>
+                <% if (isloggedIn) { %>
+                    <!-- Avatar button -->
+                    <button type="button"
+                        class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+                        id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown"
+                        data-dropdown-placement="bottom">
+                        <span class="sr-only">Open user menu</span>
+                        <img class="w-8 h-8 rounded-full" src="" alt="user photo">
+                    </button>
+                    <!-- Dropdown menu -->
+                    <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600"
+                        id="user-dropdown">
+                        <!-- Profile dropdown content -->
+                        <div class="px-4 py-3">
+                            <span class="block text-sm text-gray-900 dark:text-white"><%= userName %></span>
+                            <span class="block text-sm  text-gray-500 truncate dark:text-gray-400"><%= userEmail %></span>
+                        </div>
+                        <ul class="py-2" aria-labelledby="user-menu-button">
+                            <li>
+                                <a href="/user/<%= userId %>/profile"
+                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Profile</a>
+                            </li>
+                            <li>
+                                <a href="#"
+                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Liked</a>
+                            </li>
+                            <li>
+                                <a href="/posts/saved"
+                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Saved</a>
+                            </li>
+                            <li>
+                                <form action="/user/signout" method="post">
+                                    <button type="submit"
+                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign
+                                        out</button>
+                                </form>
+                            </li>
+                        </ul>
                     </div>
-                    <ul class="py-2" aria-labelledby="user-menu-button">
-                        <li>
-                            <a href="/user/<%= userId %>/profile"
-                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Profile</a>
-                        </li>
-                        <li>
-                            <a href="#"
-                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Liked</a>
-                        </li>
-                        <li>
-                            <a href="/posts/saved"
-                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Saved</a>
-                        </li>
-                        <li><form action="/user/signout" method="post">
-                            <button type="submit"
-                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign
-                                out</button>
-                            </form>
-                        </li>
-                    </ul>
-                </div>
+                <% } else { %>
+                    <!-- Sign in link -->
+                    <a href="/user/login" class="text-gray-700 hover:text-gray-900">Sign In</a>
+                <% } %>
                 <button data-collapse-toggle="navbar-user" type="button"
                     class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
                     aria-controls="navbar-user" aria-expanded="false">
@@ -99,35 +103,32 @@
                     <li>
                         <div>
                             <div x-data="{ dropdownOpen: false }" class="relative">
-                                <button @click="dropdownOpen = !dropdownOpen" 
+                                <button @click="dropdownOpen = !dropdownOpen"
                                     class=" z-10 block rounded-md bg-white p focus:outline-none flex flex-col justify-start items-center"
                                     id="notificationIcon">
-                                    <span class="mt-0 font-medium text-gray-800 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Notifications</span>
+                                    <span
+                                        class="mt-0 font-medium text-gray-800 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Notifications</span>
                                     <!-- Your SVG icon -->
                                 </button>
-
-
                                 <div x-show="dropdownOpen" @click="dropdownOpen = false"
                                     class="fixed inset-0 h-full w-full z-10"></div>
-
                                 <div x-show="dropdownOpen"
                                     class="absolute right-0 mt-2 bg-white rounded-md shadow-lg overflow-hidden z-20"
                                     style="width:20rem;">
                                     <div class="py-2" id="notificationList">
                                     </div>
                                     <div class="py-2" id="dropdown">
-
                                     </div>
-
                                 </div>
                             </div>
                         </div>
-
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
+    
+    
 
     <script>
         function timeAgo(timestamp) {
@@ -225,7 +226,7 @@
                     anc.classList.add('block', 'bg-gray-100', 'text-center', 'font-bold', 'py-2');
 
                     anc.innerHTML = `See all notifications`;
-                    anc.setAttribute('href','/user/notifications')
+                    anc.setAttribute('href', '/user/notifications')
                     dropdown.appendChild(anc);
                 }
             }).catch(error => {

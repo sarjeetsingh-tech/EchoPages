@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const notificationSchema = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
@@ -29,16 +28,18 @@ const notificationSchema = new mongoose.Schema({
                 default: Date.now
             },
             expiryAt: {
-                type: Date // Add expiry timestamp
+                type: Date,
+                default: () => new Date(Date.now() + 24*60*60*1000)
             },
             read: {
                 type: Boolean,
-                default: false // Mark notification as unread by default
+                default: false
             }
         }],
         default: []
     }
 });
+
 
 const Notification = mongoose.model('Notification', notificationSchema);
 

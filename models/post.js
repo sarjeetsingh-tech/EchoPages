@@ -26,8 +26,12 @@ const postSchema = new mongoose.Schema({
         default:Date.now
     },
     publicationDate:{
-        type: String, // Changed to String
+        type: String,
         default: () => moment().format("MMM D, YYYY") 
+    },
+    avatar:{
+        type:String,
+        default:"https://www.shutterstock.com/image-vector/default-avatar-profile-icon-social-600nw-1677509740.jpg"
     }
 });
 
