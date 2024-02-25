@@ -11,7 +11,6 @@ const Notification = require('../models/notifications')
 
 router.get('/user/:userId/profile', async (req, res, next) => {
     // try {
-    if(!req.session.userId)return res.redirect('/user/signup')
     const { userId } = req.params;
     const user = await User.findOne({ _id: userId })
     const myPosts = await Post.find({ owner: user._id })
@@ -35,6 +34,7 @@ router.get('/user/:id/following', async (req, res, next) => {
     // try {
     const { id } = req.params;
     const followingsData = await Follow.findOne({ user: id }).populate('followings');
+
     // console.log(followingsData)
     res.render('users/following', { followings: followingsData.followings });
     // } catch (err) {
@@ -63,23 +63,36 @@ router.get('/user/:id/following', async (req, res, next) => {
     // }
 })
 router.get('/user/notifications', async (req, res, next) => {
-    const data = await Notification.findOne({ userId: req.user._id }).populate({
-        path: 'notifications',
-        populate: [
-            { path: 'actionBy', model: 'User' },
-            { path: 'postId', model: 'Post' }
-        ]
-    });
-    console.log(data);
-    if(data==null){
-        res.render('posts/notification',{notifications:[]})
-    }else{
-    const notifications = data.notifications;
-    data.notifications = []
-    data.save();
-    res.render('posts/notification', { notifications });
+    try {
+        const data = await Notification.findOne({ userId: req.user._id }).populate({
+            path: 'notifications',
+            populate: [
+                { path: 'actionBy', model: 'User' },
+                { path: 'postId', model: 'Post' }
+            ]
+        });
+
+        // If no data found for the user, render the template with an empty notifications array
+        if (!data) {
+            return res.render('posts/notification', { notifications: [] });
+        }
+
+        // Sort notifications by createdAt timestamp in descending order
+        const notifications = data.notifications.sort((a, b) => b.createdAt - a.createdAt);
+
+        // Clear the notifications array after retrieving them
+        data.notifications = [];
+        await data.save();
+
+        // Render the template with sorted notifications
+        res.render('posts/notification', { notifications });
+    } catch (error) {
+        console.error('Error fetching notifications:', error);
+        // Handle the error appropriately
+        next(error);
     }
-})
+});
+
 
 router.get('/user/:userId/notifications', async (req, res) => {
     const { userId } = req.params;
@@ -94,20 +107,20 @@ router.get('/user/:userId/notifications', async (req, res) => {
         })
         .sort({ 'notifications.createdAt': -1 }) // Sort notifications by createdAt field in descending order
         .limit(5); // Limit the result to 5 notifications
-    if(data==null){
+    if (data == null) {
         res.send(JSON.stringify([]));
     }
-    else{
-    const notifications = data.notifications;
-    // console.log(notifications);
+    else {
+        const notifications = data.notifications.reverse();
+        // console.log(notifications);
 
-    res.send(JSON.stringify(notifications));
+        res.send(JSON.stringify(notifications));
     }
     // } catch (error) {
     //     console.error(error);
     //     res.status(500).send('Internal Server Error');
     // }
-    
+
 });
 
 // router.get('/user/:userId/profile', async (req, res, next) => {

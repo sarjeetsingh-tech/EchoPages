@@ -1,19 +1,15 @@
+const passportLocalMongoose = require('passport-local-mongoose');
+
 const mongoose = require('mongoose');
-const bcrypt=require('bcrypt');
+
 const userSchema = new mongoose.Schema({
-    name: String,
-    email: String,
-    password: String
+    googleId:String,
+    username: { type: String, required: true, unique: true },
+    email: { type: String, required: true, unique: true },
+    password: String ,
+    profilePicture:String
 })
-userSchema.statics.isValidUser = async function (username, password) {
-    const user = await User.findOne({ name: username })
-    const isValid = await bcrypt.compare(password, user.password);
-    return isValid?user:false;
-}
-userSchema.pre('save',async function(next){
-    this.isModified('password');
-  this.password=await bcrypt.hash(this.password,12);
-  next();
-})
+userSchema.plugin(passportLocalMongoose)
+
 const User = mongoose.model('User', userSchema);
 module.exports = User;

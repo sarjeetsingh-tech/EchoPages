@@ -29,7 +29,7 @@
         <% for(let comment of comments) { %>
             
             <li>
-                <%= comment.comment %>--by <%= comment.user.name %>
+                <%= comment.comment %>--by <%= comment.user.username %>
                         <button class="deleteCommentButton" data-comment-id=<%=comment._id%>
                             >Delete</button>
 

@@ -1,5 +1,5 @@
-const express=require('express');
-const router=express.Router();
+const express = require('express');
+const router = express.Router();
 
 const appError = require('../appError')
 const Post = require('../models/post');
@@ -12,7 +12,7 @@ const Notification = require('../models/notifications')
 router.get('/posts', async (req, res, next) => {
     try {
         const query = req.query.q;
-        const fil = req.query.sort; 
+        const fil = req.query.sort;
         if (query && typeof query === 'string' && query.trim().length > 0) { // Check if query is a non-empty string
             const posts = await Post.find({
                 $or: [
@@ -27,17 +27,17 @@ router.get('/posts', async (req, res, next) => {
             if (fil === 'liked') {
                 // Sort by number of likes in descending order
                 const posts = await Post.find({}).sort({ likes: -1 });
-                console.log(posts);
+                // console.log(posts);
                 res.render('posts/index', { posts });
             } else if (fil === 'old-new') {
                 // Sort by publication date from old to new
                 const posts = await Post.find({}).sort({ date: 1 });
-                console.log(posts);
+                // console.log(posts);
                 res.render('posts/index', { posts });
             } else if (fil === 'new-old') {
                 // Sort by publication date from new to old
                 const posts = await Post.find({}).sort({ date: -1 });
-                console.log(posts);
+                // console.log(posts);
                 res.render('posts/index', { posts });
             }
         } else {
@@ -51,7 +51,7 @@ router.get('/posts', async (req, res, next) => {
 })
 
 router.post('/posts', async (req, res, next) => {
-    try {
+    // try {
         const { post } = req.body;
         const tags = post.tags.split(",");
         const newPost = new Post({
@@ -61,15 +61,15 @@ router.post('/posts', async (req, res, next) => {
             viewsCount: 0,
             likesCount: 0,
             CommentCount: 0,
-            author: req.user.name,
+            author: req.user.username,
             owner: req.user._id
         })
         await newPost.save();
         req.flash('success', 'Congratulations! 🎉 Your new page has been created successfully.');
         res.redirect(`/posts/${newPost._id}`);
-    } catch (err) {
-        next(new appError('Internal Server Error', 500));
-    }
+    // } catch (err) {
+    //     next(new appError('Internal Server Error', 500));
+    // }
 })
 
 router.get('/posts/new', async (req, res, next) => {
@@ -88,35 +88,42 @@ router.get('/posts/saved', async (req, res, next) => {
     } catch (err) {
         next(new appError('Internal Server Error', 500))
     }
-
 });
 
 
 router.get('/posts/:id', async (req, res, next) => {
     // try {
-        const { id } = req.params;
-        const post = await Post.findById(id)
-            .populate({
-                path: 'comments',
-                populate: {
-                    path: 'user',
-                    model: 'User'
-                }
-            });
-        const comments = post.comments;
-        console.log(comments);
-        const follow = await Follow.findOne({ user: req.user._id }).populate('followings');
-        console.log(follow);
-        const followingList = follow.followings
-        const collection = await Save.findOne({
-            user: req.user._id
+    const { id } = req.params;
+    const post = await Post.findById(id)
+        .populate({
+            path: 'comments',
+            populate: {
+                path: 'user',
+                model: 'User'
+            }
         });
+    const comments = post.comments;
+    console.log(comments);
+    console.log(req.user);
+    const follow = await Follow.findOne({ user: req.user._id }).populate('followings');
+    let isFollowing = false;
+    if (follow != null) {
+        const followingList = follow.followings;
+        console.log(followingList);
+        console.log(post.owner);
+        // Check if the post owner's ID exists in the user's following list
+        isFollowing = followingList.some(userId => userId.equals(post.owner));
+    }
+    console.log(isFollowing);
+    let isSave = false;
+    const collection = await Save.findOne({
+        user: req.user._id
+    });
 
-        const isFollowing = followingList.some(user => post.owner);
-        console.log(isFollowing);
-        const isSave = collection ? collection.posts.some(i => i.equals(id)) : false;
-        console.log(comments)
-        res.render('posts/show', { post, comments, saveButtonText: isSave ? "unsave" : "save", followButtonText: isFollowing ? "unfollow" : "follow" })
+    if (collection != null) {
+        isSave = collection ? collection.posts.some(i => i.equals(id)) : false;
+    }
+    res.render('posts/show', { post, comments, saveButtonText: isSave ? "unsave" : "save", followButtonText: isFollowing ? "unfollow" : "follow" })
     // } catch (err) {
     //     next(new appError('Internal Server Error', 500))
     // }
@@ -157,4 +164,4 @@ router.get('/posts/:id/edit', async (req, res, next) => {
     }
 })
 
-module.exports=router;
+module.exports = router;

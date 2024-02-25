@@ -1,5 +1,5 @@
-const express=require('express');
-const router=express.Router();
+const express = require('express');
+const router = express.Router();
 
 const appError = require('../appError')
 const Post = require('../models/post');
@@ -8,28 +8,40 @@ const Comment = require('../models/comments');
 const Save = require('../models/saved');
 const Follow = require('../models/followers');
 const Notification = require('../models/notifications')
-const reduceNotifications=require('../utils/reduceNotification')
+const reduceNotifications = require('../utils/reduceNotification')
 
-router.post('/user/:authorId/follow', reduceNotifications, async (req, res, next) => {
+router.post('/user/:authorId/follow', async (req, res, next) => {
     try {
         const { authorId } = req.params;
-        const data_userSide = await Follow.findOne({ user: req.user._id }).populate('followings');
-        const data_authorSide = await Follow.findOne({ user: authorId }).populate('followers');
 
-        // Check if the documents exist
-        if (!data_userSide || !data_authorSide) {
-            return res.status(404).send("Follow data not found");
+        let data_userSide = await Follow.findOne({ user: req.user._id });
+
+        if (!data_userSide) {
+            data_userSide = new Follow({ user: req.user._id, followings: [], followers: [] });
+            await data_userSide.save();
         }
 
-        const isFollowing = data_userSide.followings.some(i => i.equals(authorId));
+        let data_authorSide = await Follow.findOne({ user: authorId });
+
+        // If the follow data for the author doesn't exist, create a new document
+        if (!data_authorSide) {
+            data_authorSide = new Follow({ user: authorId, followings: [], followers: [] });
+            await data_authorSide.save();
+        }
+
+
+        const isFollowing = data_userSide.followings && data_userSide.followings.some(i => i.equals(authorId));
+
         if (isFollowing) {
-            // Unfollow logic
-            await data_userSide.followings.pull(authorId);
-            await data_authorSide.followers.pull(req.user._id);
+            if (data_userSide.followings) {
+                await data_userSide.followings.pull(authorId);
+            }
+            if (data_authorSide.followers) {
+                await data_authorSide.followers.pull(req.user._id);
+            }
             await Promise.all([data_userSide.save(), data_authorSide.save()]);
             return res.send(JSON.stringify('unfollowed'));
         } else {
-            // Follow logic
             data_userSide.followings.push(authorId);
             data_authorSide.followers.push(req.user._id);
             await Promise.all([data_userSide.save(), data_authorSide.save()]);
@@ -54,4 +66,6 @@ router.post('/user/:authorId/follow', reduceNotifications, async (req, res, next
 });
 
 
-module.exports=router;
+
+
+module.exports = router;

@@ -10,7 +10,7 @@ const Follow = require('../models/followers');
 const Notification = require('../models/notifications')
 const reduceNotifications=require('../utils/reduceNotification')
 
-router.post('/posts/:id/comment', reduceNotifications, async (req, res, next) => {
+router.post('/posts/:id/comment', async (req, res, next) => {
     try {
         const { id } = req.params;
         const user = await User.findOne({ _id: req.user._id });
@@ -48,7 +48,7 @@ router.post('/posts/:id/comment', reduceNotifications, async (req, res, next) =>
         post.comments.push(newComment);
         await post.save();
 
-        res.send(JSON.stringify([newComment, user.name]));
+        res.send(JSON.stringify([newComment, user.username]));
     } catch (err) {
         next(new appError('Internal Server Error', 500));
     }

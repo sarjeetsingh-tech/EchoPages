@@ -23,9 +23,9 @@ router.post('/posts/:postId/like', reduceNotifications, async (req, res, next) =
         currPost.likes.push(req.user._id);
         await currPost.save();
         totalLikes += 1;
+        console.log('hey')
         const notification = await Notification.findOne({ userId: currPost.owner._id });
-        // console.log(notification);
-        // Push a new notification into the Notification array
+
         notification.notifications.push({
             postId: postId,
             actionBy: req.user._id,
